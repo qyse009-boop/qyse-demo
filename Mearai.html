@@ -1,0 +1,1938 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MIRA Café | QYSE Digital Menu Board</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        /* =====================================================
+           VARIABLES
+        ===================================================== */
+
+        :root {
+            --bg: #f7f6f1;
+            --surface: #ffffff;
+            --surface-soft: #efeee7;
+
+            --primary: #596b45;
+            --primary-dark: #3f5030;
+            --primary-light: #dfe5d6;
+
+            --text: #20221d;
+            --text-soft: #74776d;
+
+            --border: #deded5;
+
+            --shadow:
+                0 15px 40px rgba(44, 49, 35, 0.08);
+
+            --radius: 24px;
+        }
+
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            font-family: "Cairo", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow: hidden;
+        }
+
+        button {
+            font-family: inherit;
+        }
+
+
+        /* =====================================================
+           SCREEN
+        ===================================================== */
+
+        .screen {
+            width: 100vw;
+            height: 100vh;
+
+            padding: 1.3vh 1.5vw;
+
+            display: grid;
+
+            grid-template-rows:
+                16%
+                74%
+                10%;
+
+            gap: 1vh;
+
+            position: relative;
+            overflow: hidden;
+        }
+
+
+        /* =====================================================
+           DECORATION
+        ===================================================== */
+
+        .background-shape {
+            position: absolute;
+
+            width: 35vw;
+            height: 35vw;
+
+            border-radius: 50%;
+
+            background: var(--primary-light);
+
+            opacity: 0.16;
+
+            pointer-events: none;
+
+            z-index: 0;
+        }
+
+        .shape-one {
+            top: -25vw;
+            left: -10vw;
+        }
+
+        .shape-two {
+            bottom: -28vw;
+            right: -10vw;
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .header {
+            position: relative;
+            z-index: 5;
+
+            display: grid;
+
+            grid-template-columns:
+                19%
+                63%
+                18%;
+
+            gap: 1vw;
+
+            min-height: 0;
+        }
+
+
+        /* =====================================================
+           BRAND
+        ===================================================== */
+
+        .brand {
+            display: flex;
+
+            align-items: center;
+
+            gap: 0.7vw;
+
+            padding: 0 0.8vw;
+        }
+
+        .brand-mark {
+            width: clamp(48px, 4vw, 78px);
+
+            aspect-ratio: 1;
+
+            border-radius: 50%;
+
+            background: var(--primary);
+
+            color: white;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: clamp(15px, 1.2vw, 24px);
+
+            font-weight: 900;
+
+            letter-spacing: 1px;
+
+            box-shadow:
+                0 8px 25px
+                rgba(63, 80, 48, 0.18);
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+
+            line-height: 1.05;
+        }
+
+        .brand-name {
+            font-family: Arial, sans-serif;
+
+            font-size:
+                clamp(22px, 2vw, 38px);
+
+            font-weight: 700;
+
+            letter-spacing: 5px;
+        }
+
+        .brand-sub {
+            color: var(--text-soft);
+
+            font-size:
+                clamp(8px, 0.65vw, 14px);
+
+            margin-top: 4px;
+
+            letter-spacing: 2px;
+        }
+
+
+        /* =====================================================
+           CATEGORIES
+        ===================================================== */
+
+        .categories {
+            display: flex;
+
+            align-items: stretch;
+
+            justify-content: center;
+
+            gap: 0.4vw;
+
+            padding: 0.25vw;
+
+            background:
+                rgba(255, 255, 255, 0.72);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 20px;
+
+            box-shadow: var(--shadow);
+
+            overflow: hidden;
+        }
+
+        .category {
+            flex: 1;
+
+            border: none;
+
+            background: transparent;
+
+            color: var(--text-soft);
+
+            cursor: pointer;
+
+            border-radius: 15px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 0.2vh;
+
+            transition:
+                background 0.7s ease,
+                color 0.7s ease,
+                transform 0.7s ease,
+                box-shadow 0.7s ease;
+        }
+
+        .category-icon {
+            font-size:
+                clamp(18px, 1.5vw, 29px);
+        }
+
+        .category-name {
+            font-size:
+                clamp(9px, 0.75vw, 15px);
+
+            font-weight: 800;
+        }
+
+        .category.active {
+            background: var(--primary);
+
+            color: white;
+
+            box-shadow:
+                0 8px 20px
+                rgba(63, 80, 48, 0.17);
+
+            transform:
+                translateY(-1px);
+        }
+
+
+        /* =====================================================
+           CLOCK
+        ===================================================== */
+
+        .status {
+            border:
+                1px solid var(--border);
+
+            background:
+                rgba(255,255,255,0.72);
+
+            border-radius: 20px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 0.8vw;
+
+            box-shadow: var(--shadow);
+        }
+
+        .status-icon {
+            width: clamp(32px, 2.5vw, 48px);
+
+            aspect-ratio: 1;
+
+            border-radius: 50%;
+
+            background: var(--primary-light);
+
+            color: var(--primary-dark);
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size:
+                clamp(14px, 1.2vw, 22px);
+        }
+
+        .status-info {
+            text-align: right;
+        }
+
+        .time {
+            font-size:
+                clamp(14px, 1.2vw, 23px);
+
+            font-weight: 800;
+
+            direction: ltr;
+        }
+
+        .date {
+            color: var(--text-soft);
+
+            font-size:
+                clamp(8px, 0.65vw, 13px);
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .main {
+            position: relative;
+
+            z-index: 2;
+
+            min-height: 0;
+
+            display: grid;
+
+            grid-template-rows:
+                1fr
+                23%;
+
+            gap: 1vh;
+        }
+
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero {
+            min-width: 0;
+            min-height: 0;
+
+            background: var(--surface);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: var(--radius);
+
+            box-shadow: var(--shadow);
+
+            overflow: hidden;
+
+            display: grid;
+
+            grid-template-columns:
+                45%
+                55%;
+
+            direction: ltr;
+
+            position: relative;
+        }
+
+
+        /* =====================================================
+           IMAGE
+        ===================================================== */
+
+        .hero-image {
+            position: relative;
+
+            min-width: 0;
+            min-height: 0;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            overflow: hidden;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    #e8ecdf 0%,
+                    #f7f6f1 70%
+                );
+        }
+
+        .hero-image::before {
+            content: "";
+
+            position: absolute;
+
+            width: 72%;
+
+            aspect-ratio: 1;
+
+            border-radius: 50%;
+
+            background: var(--primary-light);
+
+            opacity: 0.75;
+        }
+
+        .hero-image img {
+            position: relative;
+
+            z-index: 1;
+
+            width: 94%;
+            height: 94%;
+
+            object-fit: contain;
+
+            object-position: center;
+
+            padding: 2vh 2vw;
+
+            filter:
+                drop-shadow(
+                    0 20px 28px
+                    rgba(30,40,25,0.18)
+                );
+
+            transition:
+                opacity 0.8s ease,
+                transform 1s
+                cubic-bezier(.2,.8,.2,1);
+        }
+
+        .hero-image img.changing {
+            opacity: 0;
+
+            transform:
+                scale(0.9)
+                translateY(15px);
+        }
+
+
+        /* =====================================================
+           HERO INFORMATION
+        ===================================================== */
+
+        .hero-info {
+            direction: rtl;
+
+            min-width: 0;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            align-items: flex-start;
+
+            padding:
+                2vh
+                3.5vw;
+
+            position: relative;
+
+            transition:
+                opacity 0.65s ease,
+                transform 0.65s ease;
+        }
+
+        .hero-info.changing {
+            opacity: 0;
+
+            transform:
+                translateY(15px);
+        }
+
+
+        /* =====================================================
+           BADGE
+        ===================================================== */
+
+        .badge {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 0.4vw;
+
+            padding:
+                0.4vh
+                0.8vw;
+
+            border-radius: 30px;
+
+            background: var(--primary-light);
+
+            color: var(--primary-dark);
+
+            font-size:
+                clamp(10px, 0.75vw, 15px);
+
+            font-weight: 800;
+
+            margin-bottom: 1.1vh;
+        }
+
+        .badge-dot {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: var(--primary);
+        }
+
+
+        /* =====================================================
+           PRODUCT TITLE
+        ===================================================== */
+
+        .hero-name {
+            font-size:
+                clamp(35px, 4.3vw, 78px);
+
+            line-height: 1.05;
+
+            font-weight: 900;
+
+            color: var(--primary-dark);
+
+            margin-bottom: 1vh;
+        }
+
+
+        /* =====================================================
+           DESCRIPTION
+        ===================================================== */
+
+        .hero-description {
+            max-width: 88%;
+
+            color: var(--text-soft);
+
+            font-size:
+                clamp(12px, 1vw, 20px);
+
+            line-height: 1.9;
+
+            margin-bottom: 1.6vh;
+        }
+
+
+        /* =====================================================
+           PRICE
+        ===================================================== */
+
+        .hero-price {
+            display: flex;
+
+            align-items: baseline;
+
+            gap: 0.5vw;
+
+            color: var(--primary-dark);
+
+            margin-bottom: 1.2vh;
+        }
+
+        .hero-price-number {
+            font-size:
+                clamp(32px, 3.2vw, 60px);
+
+            font-weight: 900;
+
+            line-height: 1;
+        }
+
+        .hero-price-currency {
+            font-size:
+                clamp(15px, 1.2vw, 24px);
+
+            font-weight: 800;
+        }
+
+
+        /* =====================================================
+           DECORATIVE LINE
+        ===================================================== */
+
+        .hero-line {
+            width: 80px;
+
+            height: 4px;
+
+            background: var(--primary);
+
+            border-radius: 10px;
+
+            position: relative;
+        }
+
+        .hero-line::after {
+            content: "";
+
+            position: absolute;
+
+            width: 25px;
+
+            height: 4px;
+
+            right: -34px;
+
+            background: var(--primary-light);
+
+            border-radius: 10px;
+        }
+
+
+        /* =====================================================
+           OFFER
+        ===================================================== */
+
+        .offer {
+            position: absolute;
+
+            left: 2vw;
+            top: 2vh;
+
+            width:
+                clamp(145px, 14vw, 260px);
+
+            padding:
+                1vh
+                1vw;
+
+            background:
+                rgba(255,255,255,0.92);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 12px 30px
+                rgba(44,49,35,0.08);
+
+            direction: rtl;
+
+            z-index: 4;
+        }
+
+        .offer-icon {
+            position: absolute;
+
+            top: -14px;
+
+            right: 15px;
+
+            width:
+                clamp(35px, 3vw, 54px);
+
+            aspect-ratio: 1;
+
+            border-radius: 50%;
+
+            background: var(--primary);
+
+            color: white;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size:
+                clamp(15px, 1.2vw, 23px);
+        }
+
+        .offer-title {
+            color: var(--primary-dark);
+
+            font-size:
+                clamp(13px, 1vw, 20px);
+
+            font-weight: 900;
+
+            margin-bottom: 0.4vh;
+
+            padding-top: 1.2vh;
+        }
+
+        .offer-text {
+            color: var(--text-soft);
+
+            font-size:
+                clamp(9px, 0.7vw, 14px);
+
+            line-height: 1.7;
+        }
+
+        .offer-highlight {
+            color: var(--primary-dark);
+
+            font-weight: 900;
+        }
+
+
+        /* =====================================================
+           PRODUCT STRIP
+        ===================================================== */
+
+        .products {
+            min-width: 0;
+
+            display: flex;
+
+            gap: 0.7vw;
+
+            overflow: hidden;
+
+            direction: rtl;
+        }
+
+        .product-card {
+            min-width: 0;
+
+            flex: 1;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 18px;
+
+            background:
+                rgba(255,255,255,0.8);
+
+            display: grid;
+
+            grid-template-columns:
+                35%
+                65%;
+
+            align-items: center;
+
+            padding:
+                0.6vh
+                0.6vw;
+
+            cursor: pointer;
+
+            transition:
+                background 0.6s ease,
+                border 0.6s ease,
+                transform 0.6s ease,
+                box-shadow 0.6s ease;
+        }
+
+        .product-card.active {
+            background: var(--primary);
+
+            border-color: var(--primary);
+
+            color: white;
+
+            box-shadow:
+                0 10px 25px
+                rgba(63,80,48,0.16);
+
+            transform:
+                translateY(-4px);
+        }
+
+        .product-card-image {
+            width: 100%;
+            height: 90%;
+
+            object-fit: contain;
+
+            padding: 0.3vh;
+
+            transition:
+                transform 0.7s ease;
+        }
+
+        .product-card.active
+        .product-card-image {
+            transform:
+                scale(1.08);
+        }
+
+        .product-card-info {
+            text-align: right;
+
+            padding:
+                0
+                0.4vw;
+        }
+
+        .product-card-name {
+            font-size:
+                clamp(10px, 0.85vw, 17px);
+
+            font-weight: 800;
+
+            line-height: 1.3;
+        }
+
+        .product-card-price {
+            margin-top: 0.3vh;
+
+            color: var(--primary);
+
+            font-size:
+                clamp(9px, 0.75vw, 15px);
+
+            font-weight: 800;
+        }
+
+        .product-card.active
+        .product-card-price {
+            color: #e8eedf;
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        .footer {
+            position: relative;
+
+            z-index: 5;
+
+            min-width: 0;
+
+            display: grid;
+
+            grid-template-columns:
+                22%
+                38%
+                25%
+                15%;
+
+            align-items: center;
+
+            border-top:
+                1px solid var(--border);
+
+            color: var(--text-soft);
+
+            font-size:
+                clamp(9px, 0.72vw, 14px);
+        }
+
+        .footer-item {
+            min-width: 0;
+
+            text-align: center;
+
+            padding:
+                0
+                0.5vw;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+            border-left:
+                1px solid var(--border);
+        }
+
+        .footer-item:last-child {
+            border-left: none;
+        }
+
+        .footer strong {
+            color: var(--primary-dark);
+        }
+
+        .footer-icon {
+            color: var(--primary);
+
+            margin-left: 4px;
+        }
+
+
+        /* =====================================================
+           FULLSCREEN
+        ===================================================== */
+
+        .fullscreen {
+            position: fixed;
+
+            left: 10px;
+            bottom: 10px;
+
+            z-index: 999;
+
+            border:
+                1px solid var(--border);
+
+            background:
+                rgba(255,255,255,0.8);
+
+            color: var(--text-soft);
+
+            width: 34px;
+            height: 34px;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            opacity: 0.12;
+
+            transition:
+                opacity 0.3s ease;
+        }
+
+        .fullscreen:hover {
+            opacity: 1;
+        }
+
+
+        /* =====================================================
+           PORTRAIT WARNING
+        ===================================================== */
+
+        @media (orientation: portrait) {
+
+            body::before {
+                content:
+                    "هذا التصميم مخصص للشاشات الأفقية 16:9";
+
+                position: fixed;
+
+                inset: 0;
+
+                z-index: 99999;
+
+                background: var(--bg);
+
+                color: var(--primary-dark);
+
+                display: flex;
+
+                align-items: center;
+                justify-content: center;
+
+                text-align: center;
+
+                font-size: 6vw;
+
+                font-weight: 800;
+
+                padding: 10vw;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="background-shape shape-one"></div>
+    <div class="background-shape shape-two"></div>
+
+
+    <div class="screen">
+
+
+        <!-- =================================================
+             HEADER
+        ================================================== -->
+
+        <header class="header">
+
+
+            <!-- BRAND -->
+
+            <div class="brand">
+
+                <div class="brand-mark">
+                    M
+                </div>
+
+                <div class="brand-text">
+
+                    <div class="brand-name">
+                        MIRA
+                    </div>
+
+                    <div class="brand-sub">
+                        CAFÉ · COFFEE & MORE
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- CATEGORIES -->
+
+            <nav
+                id="categories"
+                class="categories"
+            ></nav>
+
+
+
+            <!-- CLOCK -->
+
+            <div class="status">
+
+                <div class="status-icon">
+                    ◷
+                </div>
+
+                <div class="status-info">
+
+                    <div
+                        id="time"
+                        class="time"
+                    >
+                        12:30:00 PM
+                    </div>
+
+                    <div
+                        id="date"
+                        class="date"
+                    >
+                        السبت، 24 مايو
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </header>
+
+
+
+        <!-- =================================================
+             MAIN
+        ================================================== -->
+
+        <main class="main">
+
+
+            <!-- =================================================
+                 HERO
+            ================================================== -->
+
+            <article class="hero">
+
+
+                <!-- IMAGE -->
+
+                <div class="hero-image">
+
+                    <img
+                        id="heroImage"
+                        src=""
+                        alt=""
+                    >
+
+                </div>
+
+
+
+                <!-- INFORMATION -->
+
+                <div
+                    id="heroInfo"
+                    class="hero-info"
+                >
+
+                    <div class="badge">
+
+                        <span class="badge-dot"></span>
+
+                        <span>
+                            اختيار اليوم
+                        </span>
+
+                    </div>
+
+
+                    <h1
+                        id="heroName"
+                        class="hero-name"
+                    >
+                        آيس لاتيه
+                    </h1>
+
+
+                    <p
+                        id="heroDescription"
+                        class="hero-description"
+                    >
+                        مزيج مثالي من الإسبريسو
+                        والحليب البارد مع لمسة
+                        ناعمة من النكهة الغنية.
+                    </p>
+
+
+                    <div class="hero-price">
+
+                        <span
+                            id="heroPrice"
+                            class="hero-price-number"
+                        >
+                            12
+                        </span>
+
+                        <span class="hero-price-currency">
+                            د.ل
+                        </span>
+
+                    </div>
+
+
+                    <div class="hero-line"></div>
+
+                </div>
+
+
+
+                <!-- OFFER -->
+
+                <div class="offer">
+
+                    <div class="offer-icon">
+                        🎁
+                    </div>
+
+                    <div class="offer-title">
+                        عرض اليوم
+                    </div>
+
+                    <div class="offer-text">
+
+                        اشتري مشروبين
+
+                        <br>
+
+                        واحصل على الثالث
+
+                        <br>
+
+                        <span class="offer-highlight">
+                            بنصف السعر
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+            </article>
+
+
+
+            <!-- =================================================
+                 PRODUCTS
+            ================================================== -->
+
+            <div
+                id="products"
+                class="products"
+            ></div>
+
+
+        </main>
+
+
+
+        <!-- =================================================
+             FOOTER
+        ================================================== -->
+
+        <footer class="footer">
+
+
+            <div class="footer-item">
+
+                <span class="footer-icon">
+                    ☎
+                </span>
+
+                <strong>
+                    091 000 0000
+                </strong>
+
+            </div>
+
+
+            <div class="footer-item">
+
+                <span class="footer-icon">
+                    📍
+                </span>
+
+                طرابلس — شارع عمر المختار
+
+            </div>
+
+
+            <div class="footer-item">
+
+                <span class="footer-icon">
+                    ◷
+                </span>
+
+                يوميًا 09:00 صباحًا — 12:00 ليلًا
+
+            </div>
+
+
+            <div class="footer-item">
+
+                <span class="footer-icon">
+                    ♡
+                </span>
+
+                جودة في كل كوب
+
+            </div>
+
+
+        </footer>
+
+
+    </div>
+
+
+
+    <!-- FULLSCREEN -->
+
+    <button
+        class="fullscreen"
+        onclick="toggleFullscreen()"
+        title="ملء الشاشة"
+    >
+        ⛶
+    </button>
+
+
+
+    <script>
+
+        /* =====================================================
+           MENU DATA
+        ===================================================== */
+
+        const menu = [
+
+            {
+                name: "قهوة",
+                icon: "☕",
+
+                products: [
+
+                    {
+                        name: "آيس لاتيه",
+                        price: "12",
+
+                        image:
+                            "https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=1200&q=90",
+
+                        description:
+                            "مزيج مثالي من الإسبريسو والحليب البارد مع لمسة ناعمة من النكهة الغنية."
+                    },
+
+                    {
+                        name: "كابتشينو",
+                        price: "9",
+
+                        image:
+                            "https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=1200&q=90",
+
+                        description:
+                            "إسبريسو غني مع حليب كريمي ورغوة ناعمة."
+                    },
+
+                    {
+                        name: "لاتيه",
+                        price: "10",
+
+                        image:
+                            "https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=1200&q=90",
+
+                        description:
+                            "قهوة ناعمة بالحليب بطعم متوازن ومميز."
+                    },
+
+                    {
+                        name: "موكا",
+                        price: "12",
+
+                        image:
+                            "https://images.unsplash.com/photo-1578314675249-a6910f80cc4e?auto=format&fit=crop&w=1200&q=90",
+
+                        description:
+                            "مزيج غني من الإسبريسو والشوكولاتة والحليب."
+                    },
+
+                    {
+                        name: "إسبريسو",
+                        price: "6",
+
+                        image:
+                            "https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&w=1200&q=90",
+
+                        description:
+                            "جرعة قهوة مركزة بنكهة قوية ورائحة غنية."
+                    }
+
+                ]
+            },
+
+
+            {
+                name: "مشروبات باردة",
+                icon: "🥤",
+
+                products: [
+
+                    {
+                        name: "ليمون ونعناع",
+                        price: "6",
+
+                        image:
+                            "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=1200&q=90",
+
+                        description:
+                            "ليمون منعش مع النعناع الطازج في خلطة خفيفة ومنعشة."
+                    },
+
+                    {
+                        name: "آيس تي خوخ",
+                        price: "8",
+
+                        image:
+                            "https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=1200&q=90",
+
+                        description:
+                            "شاي بارد بنكهة الخوخ مع لمسة منعشة."
+                    },
+
+                    {
+                        name: "موهيتو كلاسيك",
+                        price: "9",
+
+                        image:
+                            "https://images.unsplash.com/photo-1551538827-9c037cb4f32a?auto=format&fit=crop&w=1200&q=90",
+
+                        description:
+                            "ليمون ونعناع ومشروب غازي في تركيبة منعشة."
+                    },
+
+                    {
+                        name: "بلو لاجون",
+                        price: "10",
+
+                        image:
+                            "https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=1200&q=90",
+
+                        description:
+                            "مشروب بارد بنكهة استوائية ومظهر مميز."
+                    }
+
+                ]
+            },
+
+
+            {
+                name: "عصائر",
+                icon: "🍹",
+
+                products: [
+
+                    {
+                        name: "عصير مانجا",
+                        price: "8",
+
+                        image:
+                            "https://images.unsplash.com/photo-1546173159-315724a31696?auto=format&fit=crop&w=1200&q=90",
+
+                        description:
+                            "مانجا ناضجة بطعم استوائي غني ومنعش."
+                    },
+
+                    {
+                        name: "عصير فراولة",
+                        price: "7",
+
+                        image:
+                            "https://images.unsplash.com/photo-1570831739435-6601aa3fa4fb?auto=format&fit=crop&w=1200&q=90",
+
+                        description:
+                            "فراولة طازجة بطعم طبيعي وحلو."
+                    },
+
+                    {
+                        name: "عصير برتقال",
+                        price: "8",
+
+                        image:
+                            "https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=1200&q=90",
+
+                        description:
+                            "برتقال طازج بعصارة طبيعية وانتعاش واضح."
+                    },
+
+                    {
+                        name: "عصير كوكتيل",
+                        price: "8",
+
+                        image:
+                            "https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=1200&q=90",
+
+                        description:
+                            "تشكيلة من الفواكه الطبيعية في كوب واحد."
+                    }
+
+                ]
+            },
+
+
+            {
+                name: "حلويات",
+                icon: "🍰",
+
+                products: [
+
+                    {
+                        name: "تشيز كيك",
+                        price: "12",
+
+                        image:
+                            "https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=1200&q=90",
+
+                        description:
+                            "تشيز كيك كريمي بقوام ناعم وطعم متوازن."
+                    },
+
+                    {
+                        name: "براوني",
+                        price: "9",
+
+                        image:
+                            "https://images.unsplash.com/photo-1606313564200-e75d5e30476e?auto=format&fit=crop&w=1200&q=90",
+
+                        description:
+                            "براوني شوكولاتة غني يقدم بطعم دافئ ولذيذ."
+                    },
+
+                    {
+                        name: "وافل",
+                        price: "11",
+
+                        image:
+                            "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=1200&q=90",
+
+                        description:
+                            "وافل طازج مع إضافات تختارها حسب رغبتك."
+                    }
+
+                ]
+            },
+
+
+            {
+                name: "وجبات خفيفة",
+                icon: "🥪",
+
+                products: [
+
+                    {
+                        name: "كلوب ساندويتش",
+                        price: "18",
+
+                        image:
+                            "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=1200&q=90",
+
+                        description:
+                            "ساندويتش غني ومشبع بطبقات من المكونات الطازجة."
+                    },
+
+                    {
+                        name: "كرواسون جبنة",
+                        price: "10",
+
+                        image:
+                            "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=1200&q=90",
+
+                        description:
+                            "كرواسون طازج بحشوة جبنة كريمية."
+                    },
+
+                    {
+                        name: "ساندويتش دجاج",
+                        price: "16",
+
+                        image:
+                            "https://images.unsplash.com/photo-1521390188846-e2a3a97453a0?auto=format&fit=crop&w=1200&q=90",
+
+                        description:
+                            "دجاج متبل مع خضروات طازجة وصلصة خاصة."
+                    }
+
+                ]
+            }
+
+        ];
+
+
+        /* =====================================================
+           STATE
+        ===================================================== */
+
+        let categoryIndex = 0;
+
+        let productIndex = 0;
+
+        const PRODUCT_DURATION = 5000;
+
+
+        /* =====================================================
+           ELEMENTS
+        ===================================================== */
+
+        const categories =
+            document.getElementById("categories");
+
+        const productsContainer =
+            document.getElementById("products");
+
+        const heroImage =
+            document.getElementById("heroImage");
+
+        const heroInfo =
+            document.getElementById("heroInfo");
+
+        const heroName =
+            document.getElementById("heroName");
+
+        const heroPrice =
+            document.getElementById("heroPrice");
+
+        const heroDescription =
+            document.getElementById("heroDescription");
+
+
+        /* =====================================================
+           RENDER CATEGORIES
+        ===================================================== */
+
+        function renderCategories() {
+
+            categories.innerHTML = "";
+
+            menu.forEach((category, index) => {
+
+                const button =
+                    document.createElement("button");
+
+                button.className =
+                    "category" +
+                    (
+                        index === categoryIndex
+                            ? " active"
+                            : ""
+                    );
+
+                button.innerHTML = `
+
+                    <span class="category-icon">
+                        ${category.icon}
+                    </span>
+
+                    <span class="category-name">
+                        ${category.name}
+                    </span>
+
+                `;
+
+                button.onclick = () => {
+
+                    categoryIndex = index;
+
+                    productIndex = 0;
+
+                    render();
+
+                };
+
+                categories.appendChild(button);
+
+            });
+
+        }
+
+
+        /* =====================================================
+           RENDER PRODUCTS
+        ===================================================== */
+
+        function renderProducts() {
+
+            productsContainer.innerHTML = "";
+
+            const category =
+                menu[categoryIndex];
+
+            category.products.forEach(
+                (product, index) => {
+
+                    const card =
+                        document.createElement("div");
+
+                    card.className =
+                        "product-card" +
+                        (
+                            index === productIndex
+                                ? " active"
+                                : ""
+                        );
+
+                    card.innerHTML = `
+
+                        <img
+                            class="product-card-image"
+                            src="${product.image}"
+                            alt="${product.name}"
+                        >
+
+                        <div class="product-card-info">
+
+                            <div class="product-card-name">
+                                ${product.name}
+                            </div>
+
+                            <div class="product-card-price">
+                                ${product.price} د.ل
+                            </div>
+
+                        </div>
+
+                    `;
+
+                    card.onclick = () => {
+
+                        productIndex = index;
+
+                        updateHero();
+
+                        renderProducts();
+
+                    };
+
+                    productsContainer.appendChild(card);
+
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           UPDATE HERO
+        ===================================================== */
+
+        function updateHero() {
+
+            const product =
+                menu[categoryIndex]
+                    .products[productIndex];
+
+            heroImage.classList.add("changing");
+
+            heroInfo.classList.add("changing");
+
+
+            setTimeout(() => {
+
+                heroImage.src =
+                    product.image;
+
+                heroImage.alt =
+                    product.name;
+
+                heroName.textContent =
+                    product.name;
+
+                heroPrice.textContent =
+                    product.price;
+
+                heroDescription.textContent =
+                    product.description;
+
+                heroImage.classList.remove("changing");
+
+                heroInfo.classList.remove("changing");
+
+            }, 450);
+
+        }
+
+
+        /* =====================================================
+           RENDER EVERYTHING
+        ===================================================== */
+
+        function render() {
+
+            renderCategories();
+
+            renderProducts();
+
+            updateHero();
+
+        }
+
+
+        /* =====================================================
+           NEXT PRODUCT
+        ===================================================== */
+
+        function nextProduct() {
+
+            const products =
+                menu[categoryIndex].products;
+
+            productIndex++;
+
+            if (
+                productIndex >=
+                products.length
+            ) {
+
+                productIndex = 0;
+
+                categoryIndex++;
+
+                if (
+                    categoryIndex >=
+                    menu.length
+                ) {
+
+                    categoryIndex = 0;
+
+                }
+
+            }
+
+            render();
+
+        }
+
+
+        /* =====================================================
+           CLOCK
+        ===================================================== */
+
+        function updateClock() {
+
+            const now = new Date();
+
+            let hours =
+                now.getHours();
+
+            const minutes =
+                String(
+                    now.getMinutes()
+                ).padStart(2, "0");
+
+            const seconds =
+                String(
+                    now.getSeconds()
+                ).padStart(2, "0");
+
+            const period =
+                hours >= 12
+                    ? "PM"
+                    : "AM";
+
+            hours =
+                hours % 12 || 12;
+
+            document.getElementById(
+                "time"
+            ).textContent =
+                `${hours}:${minutes}:${seconds} ${period}`;
+
+
+            const days = [
+                "الأحد",
+                "الاثنين",
+                "الثلاثاء",
+                "الأربعاء",
+                "الخميس",
+                "الجمعة",
+                "السبت"
+            ];
+
+            const months = [
+                "يناير",
+                "فبراير",
+                "مارس",
+                "أبريل",
+                "مايو",
+                "يونيو",
+                "يوليو",
+                "أغسطس",
+                "سبتمبر",
+                "أكتوبر",
+                "نوفمبر",
+                "ديسمبر"
+            ];
+
+            document.getElementById(
+                "date"
+            ).textContent =
+                `${days[now.getDay()]}، ${now.getDate()} ${months[now.getMonth()]}`;
+
+        }
+
+
+        /* =====================================================
+           FULLSCREEN
+        ===================================================== */
+
+        function toggleFullscreen() {
+
+            if (!document.fullscreenElement) {
+
+                document.documentElement
+                    .requestFullscreen()
+                    .catch(() => {});
+
+            } else {
+
+                document.exitFullscreen();
+
+            }
+
+        }
+
+
+        /* =====================================================
+           START
+        ===================================================== */
+
+        render();
+
+        updateClock();
+
+        setInterval(
+            updateClock,
+            1000
+        );
+
+        setInterval(
+            nextProduct,
+            PRODUCT_DURATION
+        );
+
+    </script>
+
+</body>
+
+</html>
